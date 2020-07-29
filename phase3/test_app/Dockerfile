@@ -1,10 +1,10 @@
-FROM ubuntu
+FROM node:10-alpine
+# Following Dockerfile best practices, 
+# use WORKDIR to instead of RUN to change directories.
+WORKDIR /app
+# it's better to use copy than ADD
+COPY . /app
 
-ADD . /app
+RUN npm install
 
-RUN apt-get update
-RUN apt-get upgrade -y
-RUN apt-get install -y nodejs ssh mysql
-RUN cd /app && npm install
-
-CMD mysql & sshd & npm start
+CMD ["npm", "start"]
